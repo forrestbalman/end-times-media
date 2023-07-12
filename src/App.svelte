@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
     let videos = [
         {
             name: "green twist",
@@ -78,10 +80,25 @@
     ];
     let showLightbox = false;
     let activeVideo = "https://www.youtube.com/embed/IlJaMEyUzfo";
+    let iframeRef;
 
     const toggleLightbox = (url) => {
         showLightbox = !showLightbox;
-        activeVideo = url;
+        if (showLightbox) {
+            activeVideo = url;
+        } else {
+            // Clear the iframe source when hiding the lightbox
+            activeVideo = "";
+        }
+    };
+
+    onMount(() => {
+        // When the iframe finishes loading, set the active video URL
+        iframeRef.addEventListener("load", handleIframeLoad);
+    });
+
+    const handleIframeLoad = () => {
+        activeVideo = iframeRef.src;
     };
 </script>
 
@@ -89,9 +106,8 @@
     <div class="wrapper">
         <div class="row">
             {#each videos as video}
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div class="tile col-4 p-0 border border-secondary" on:click={() => toggleLightbox(video.url)}>
                     <img src={video.thumbnail} alt={video.name} class="w-100 h-100" />
                 </div>
@@ -103,7 +119,7 @@
 <div class="{showLightbox === false ? 'd-none' : ''} lightbox-bg position-fixed top-0 start-0 w-100 h-100" />
 <div class="{showLightbox === false ? 'd-none' : ''} lightbox position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
     <!-- svelte-ignore a11y-missing-attribute -->
-    <iframe src={activeVideo} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="{showLightbox === false ? 'd-none' : ''} w-75 h-75" />
+    <iframe id="video-iframe" src={activeVideo} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="{showLightbox === false ? 'd-none' : ''} w-75 h-75" bind:this={iframeRef} />
 </div>
 <div class="{showLightbox === false ? 'd-none' : ''} lightbox-close position-fixed top-0 end-0 m-3">
     <button class="btn text-light fs-3" on:click={toggleLightbox}>X</button>
