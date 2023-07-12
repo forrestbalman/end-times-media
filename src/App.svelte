@@ -77,7 +77,7 @@
         },
     ];
     let showLightbox = false;
-    let activeVideo = "";
+    let activeVideo = "https://www.youtube.com/embed/IlJaMEyUzfo";
 
     const toggleLightbox = (url) => {
         showLightbox = !showLightbox;
