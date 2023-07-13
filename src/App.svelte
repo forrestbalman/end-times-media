@@ -137,11 +137,11 @@
 
     @media (max-height: 500px) {
         .wrapper {
-            width: 54vh;
+            width: 84vh;
         }
 
         .tile {
-            height: 11vh;
+            height: 17vh;
         }
     }
 
