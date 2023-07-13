@@ -127,11 +127,11 @@
 
 <style>
     .wrapper {
-        width: 36vh;
+        width: 42vh;
     }
 
     .tile {
-        height: 12vh;
+        height: 8vh;
         transition: scale 0.15s ease-in-out;
     }
 
@@ -141,7 +141,7 @@
         }
 
         .tile {
-            height: 18vh;
+            height: 11vh;
         }
     }
 
