@@ -130,7 +130,7 @@
             {#each videos as video}
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div class="tile col-4 p-0 {video.clicked ? 'clicked' : 'border border-secondary'}" on:click={() => toggleLightbox(video.url)}>
+                <div class="tile col-4 p-0 border {video.clicked ? 'border-warning' : 'border-secondary'}" on:click={() => toggleLightbox(video.url)}>
                     <img src={video.thumbnail} alt={video.name} class="w-100 h-100" />
                 </div>
             {/each}
@@ -177,10 +177,5 @@
 
     .lightbox-bg {
         background-color: rgba(0, 0, 0, 0.81);
-    }
-
-    .clicked {
-        opacity: 0;
-        pointer-events: none;
     }
 </style>
